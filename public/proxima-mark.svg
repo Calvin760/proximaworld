@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" role="img" aria-label="Proxima World logo">
+  <defs>
+    <!-- Main blue gradient — bright cyan to deep sapphire, matching the brand -->
+    <linearGradient id="pw-pGrad" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#7DD5FF" />
+      <stop offset="45%" stop-color="#2A95F2" />
+      <stop offset="100%" stop-color="#0A3D8F" />
+    </linearGradient>
+
+    <!-- Left-edge highlight — gives the P a dimensional, "chrome" feel -->
+    <linearGradient id="pw-pEdge" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#E0F2FF" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#E0F2FF" stop-opacity="0" />
+    </linearGradient>
+
+    <!-- Central sphere — light source from upper-left, deep core -->
+    <radialGradient id="pw-sphereGrad" cx="35%" cy="30%" r="80%">
+      <stop offset="0%" stop-color="#E0F2FF" />
+      <stop offset="35%" stop-color="#5DC4FF" />
+      <stop offset="100%" stop-color="#0A2862" />
+    </radialGradient>
+  </defs>
+
+  <!-- P body: stem + loop, with angled tail at the bottom-right of the stem.
+       fill-rule="evenodd" creates the hole in the loop. -->
+  <path
+    d="M 7 4 L 16.5 4 C 21.5 4 25 7.5 25 11.5 C 25 15.5 21.5 19 16.5 19 L 12 19 L 12 24 L 14 28 L 7 28 Z M 12 7.5 L 12 15.5 L 16.5 15.5 C 18.8 15.5 20.7 13.7 20.7 11.5 C 20.7 9.3 18.8 7.5 16.5 7.5 Z"
+    fill="url(#pw-pGrad)"
+    fill-rule="evenodd"
+  />
+
+  <!-- Subtle chrome highlight running down the left edge of the stem -->
+  <path d="M 7 4 L 8.6 4 L 8.6 28 L 7 28 Z" fill="url(#pw-pEdge)" opacity="0.55" />
+
+  <!-- Central sphere -->
+  <circle cx="15.5" cy="11.5" r="2.2" fill="url(#pw-sphereGrad)" />
+
+  <!-- Orbit ring — tilted -22°, drawn in front for clarity at small sizes -->
+  <ellipse
+    cx="15.5"
+    cy="11.5"
+    rx="6"
+    ry="2.4"
+    transform="rotate(-22 15.5 11.5)"
+    stroke="#5DC4FF"
+    stroke-width="0.55"
+    opacity="0.9"
+  />
+</svg>

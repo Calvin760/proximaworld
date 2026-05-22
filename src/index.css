@@ -1,0 +1,259 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   THEME TOKENS — PROXIMA WORLD
+   Deep midnight navy + electric cyan-blue accent.
+   All colors as space-separated RGB so Tailwind's alpha utility
+   modifiers (e.g. bg-ink/80) work.
+   ============================================================ */
+:root {
+  --color-bg: 241 245 251;
+  /* cool off-white */
+  --color-surface: 255 255 255;
+  /* pure white card */
+  --color-surface-2: 229 237 248;
+  /* pale blue-grey */
+  --color-ink: 7 9 26;
+  /* deep navy text */
+  --color-muted: 72 87 117;
+  /* readable secondary */
+  --color-subtle: 136 150 176;
+  /* tertiary, captions */
+  --color-line: 221 229 242;
+  /* hairline borders */
+  --color-accent: 30 159 255;
+  /* electric blue */
+  --color-accent-ink: 255 255 255;
+  /* foreground on accent */
+  --color-accent-soft: 214 235 255;
+  /* tinted accent bg */
+}
+
+.dark {
+  --color-bg: 4 7 18;
+  /* midnight (matches logo bg) */
+  --color-surface: 11 17 34;
+  /* card */
+  --color-surface-2: 19 28 52;
+  /* elevated */
+  --color-ink: 224 232 245;
+  /* cool off-white */
+  --color-muted: 148 162 190;
+  --color-subtle: 100 115 145;
+  --color-line: 28 40 68;
+  --color-accent: 61 175 255;
+  /* brighter for dark */
+  --color-accent-ink: 4 7 18;
+  --color-accent-soft: 16 38 74;
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+@layer base {
+  * {
+    @apply border-line;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply font-sans bg-bg text-ink;
+    font-feature-settings: 'ss01', 'cv11';
+  }
+
+  /* Selection */
+  ::selection {
+    @apply bg-accent text-accent-ink;
+  }
+
+  /* Focus rings — accessible & on-brand */
+  :focus-visible {
+    @apply outline-none ring-2 ring-accent ring-offset-2 ring-offset-bg;
+  }
+
+  /* Headings default to display font */
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display font-medium tracking-tightest;
+  }
+
+  /* Subtle baseline scrollbar in dark mode */
+  .dark ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  .dark ::-webkit-scrollbar-track {
+    background: rgb(var(--color-bg));
+  }
+
+  .dark ::-webkit-scrollbar-thumb {
+    background: rgb(var(--color-surface-2));
+    border-radius: 8px;
+  }
+
+  .dark ::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--color-line));
+  }
+}
+
+/* ============================================================
+   COMPONENT PATTERNS — reusable utility recipes
+   ============================================================ */
+@layer components {
+
+  /* Eyebrow label — used for section taglines */
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-2xs font-mono uppercase tracking-[0.18em] text-muted;
+  }
+
+  .eyebrow::before {
+    content: '';
+    @apply block h-px w-6 bg-accent;
+  }
+
+  /* Hairline divider */
+  .hairline {
+    @apply h-px w-full bg-line;
+  }
+
+  /* Card surface */
+  .card {
+    @apply bg-surface border border-line rounded-2xl transition-all duration-500 ease-out-expo;
+  }
+
+  .card-interactive {
+    @apply card hover:-translate-y-1 hover:border-accent/40 hover:shadow-[0_24px_48px_-24px_rgba(30, 159, 255, 0.25)] dark:hover:shadow-[0_24px_48px_-24px_rgba(61, 175, 255, 0.35)];
+  }
+
+  /* Link with animated underline */
+  .link-underline {
+    @apply relative inline-flex items-center gap-1.5 text-ink transition-colors;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 400ms cubic-bezier(0.16, 1, 0.3, 1), color 200ms ease;
+  }
+
+  .link-underline:hover {
+    background-size: 100% 1px;
+  }
+
+  /* Section padding scale */
+  .section-y {
+    @apply py-20 md:py-28 lg:py-32;
+  }
+
+  .section-y-sm {
+    @apply py-14 md:py-20;
+  }
+
+  /* Grid pattern background */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, rgb(var(--color-line) / 0.6) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(var(--color-line) / 0.6) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+
+  .bg-grid-fade {
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+  }
+
+  /* Star-field — small noise texture, used sparingly to add depth in dark mode */
+  .bg-stars {
+    background-image:
+      radial-gradient(1px 1px at 20% 30%, rgb(var(--color-accent) / 0.4), transparent 50%),
+      radial-gradient(1px 1px at 80% 70%, rgb(var(--color-accent) / 0.3), transparent 50%),
+      radial-gradient(1px 1px at 40% 80%, rgb(var(--color-ink) / 0.3), transparent 50%),
+      radial-gradient(1px 1px at 90% 20%, rgb(var(--color-accent) / 0.3), transparent 50%);
+    background-size: 400px 400px;
+  }
+}
+
+/* ============================================================
+   ANIMATIONS — scroll reveal helpers
+   The .reveal class is applied to elements; the .is-visible class
+   is toggled by the useReveal hook when the element enters viewport.
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 800ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 800ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger children when the parent is visible */
+.reveal-stagger>* {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 700ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-stagger.is-visible>* {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-stagger.is-visible>*:nth-child(1) {
+  transition-delay: 0ms;
+}
+
+.reveal-stagger.is-visible>*:nth-child(2) {
+  transition-delay: 80ms;
+}
+
+.reveal-stagger.is-visible>*:nth-child(3) {
+  transition-delay: 160ms;
+}
+
+.reveal-stagger.is-visible>*:nth-child(4) {
+  transition-delay: 240ms;
+}
+
+.reveal-stagger.is-visible>*:nth-child(5) {
+  transition-delay: 320ms;
+}
+
+.reveal-stagger.is-visible>*:nth-child(6) {
+  transition-delay: 400ms;
+}
+
+.reveal-stagger.is-visible>*:nth-child(7) {
+  transition-delay: 480ms;
+}
+
+.reveal-stagger.is-visible>*:nth-child(8) {
+  transition-delay: 560ms;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

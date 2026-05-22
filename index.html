@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#040712" />
+  <meta name="description"
+    content="Proxima World — Enterprise software engineering, cloud transformation, and data intelligence for businesses that move fast." />
+
+  <!-- Preconnect to font CDNs -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- Fonts: Fraunces (display serif) + DM Sans (body) + JetBrains Mono (mono accents) -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..900&family=DM+Sans:opsz,wght@9..40,300..700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet" />
+
+  <title>Proxima World — Engineering the next frontier of enterprise</title>
+
+  <!--
+      Theme bootstrap — runs synchronously before paint to avoid the dark/light
+      FOUC when a user has previously selected (or system-prefers) dark mode.
+      Mirrors the logic in src/context/ThemeContext.jsx.
+    -->
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem('proxima-theme');
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var isDark = stored ? stored === 'dark' : prefersDark;
+        if (isDark) document.documentElement.classList.add('dark');
+        document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
+      } catch (e) { }
+    })();
+  </script>
+</head>
+
+<body class="bg-bg text-ink antialiased">
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
+</html>
